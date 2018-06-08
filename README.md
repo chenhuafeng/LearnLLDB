@@ -57,7 +57,7 @@ There are many commands; here's a few:
 |presponder       |从给定的对象开始打印响应链。|Yes|Yes|
 |...              |... and many more!|
 
-To see the list of **all** of the commands execute the help command in `LLDB` or go to the [Wiki](https://github.com/facebook/chisel/wiki).
+要查看**所有**命令的列表，请在 `LLDB` 中执行 `help` 命令，或者转到[Wiki](https://github.com/facebook/chisel/wiki)。
 
 ```Python
 (lldb) help
@@ -67,72 +67,3 @@ The following is a list of built-in, permanent debugger commands:
 The following is a list of your current user-defined commands:
 ...
 ```
-
-The bottom of the list will contain all of the commands sourced from `Chisel`.
-
-You can also inspect a specific command by passing its name as an argument to the help command (as with all other `LLDB` commands). 
-
-```
-(lldb) help border
-Draws a border around <viewOrLayer>. Color and width can be optionally provided.
-
-Arguments:
-  <viewOrLayer>; Type: UIView*; The view to border.
-
-Options:
-  --color/-c <color>; Type: string; A color name such as 'red', 'green', 'magenta', etc.
-  --width/-w <width>; Type: CGFloat; Desired width of border.
-
-Syntax: border [--color=color] [--width=width] <viewOrLayer>
-```
-
-All of the commands provided by `Chisel` come with verbose help. Be sure to read it when in doubt!
-
-## Custom Commands
-You can add local, custom commands. Here's a contrived example.
-
-```python
-#!/usr/bin/python
-# Example file with custom commands, located at /magical/commands/example.py
-
-import lldb
-import fblldbbase as fb
-
-def lldbcommands():
-  return [ PrintKeyWindowLevel() ]
-  
-class PrintKeyWindowLevel(fb.FBCommand):
-  def name(self):
-    return 'pkeywinlevel'
-    
-  def description(self):
-    return 'An incredibly contrived command that prints the window level of the key window.'
-    
-  def run(self, arguments, options):
-    # It's a good habit to explicitly cast the type of all return
-    # values and arguments. LLDB can't always find them on its own.
-    lldb.debugger.HandleCommand('p (CGFloat)[(id)[(id)[UIApplication sharedApplication] keyWindow] windowLevel]')
-```
-
-Then all that's left is to source the commands in lldbinit. `Chisel` has a python function just for this, _loadCommandsInDirectory_ in the _fblldb.py_ module.
-
-```Python
-# ~/.lldbinit
-...
-command script import /path/to/fblldb.py
-script fblldb.loadCommandsInDirectory('/magical/commands/')
-
-```
-
-There's also builtin support to make it super easy to specify the arguments and options that a command takes. See the _border_ and _pinvocation_ commands for example use.
-
-## Development Workflow
-Developing commands, whether for local use or contributing to `Chisel` directly, both follow the same workflow. Create a command as described in the [Custom Commands](#custom-commands) section and then
-
-1. Start `LLDB`
-2. Reach a breakpoint (or simply pause execution via the pause button in `Xcode`'s debug bar or `process interrupt` if attached directly)
-3. Execute `command source ~/.lldbinit` in LLDB to source the commands
-4. Run the command you are working on
-5. Modify the command
-6. Optionally run `script reload(modulename)`
-7. Repeat steps 3-6 until the command becomes a source of happiness
