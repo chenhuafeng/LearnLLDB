@@ -49,12 +49,12 @@ There are many commands; here's a few:
 |fv               |在层次结构中找到其class name与所提供的正则表达式匹配的一个view。|Yes|No|
 |fvc              |在层次结构中找到其class name与所提供的正则表达式匹配的一个view controller。|Yes|No|
 |show/hide        |显示或隐藏给定的view或layer。你甚至不用continue进程就可以看到变化！|Yes|Yes|
-|mask/unmask      |Overlay a view or layer with a transparent rectangle to visualize where it is.|Yes|No|
-|border/unborder  |Add a border to a view or layer to visualize where it is.|Yes|Yes|
-|caflush          |Flush the render server (equivalent to a "repaint" if no animations are in-flight).|Yes|Yes|
-|bmessage         |Set a symbolic breakpoint on the method of a class or the method of an instance without worrying which class in the hierarchy actually implements the method.|Yes|Yes|
-|wivar            |Set a watchpoint on an instance variable of an object.|Yes|Yes|
-|presponder       |Print the responder chain starting from the given object.|Yes|Yes|
+|mask/unmask      |用显而易见的矩形覆盖view或layer，以可视化它所在的位置。|Yes|No|
+|border/unborder  |向view或layer添加边框以可视化它所在的位置。|Yes|Yes|
+|caflush          |刷新渲染服务 (如果没有动画在执行中，相当于"repaint").|Yes|Yes|
+|bmessage         |在类方法或实例方法上设置一个符号断点，而不用担心层次结构中的哪一个类实际上实现了该方法。|Yes|Yes|
+|wivar            |在对象的实例变量上设置watchpoint。|Yes|Yes|
+|presponder       |从给定的对象开始打印响应链。|Yes|Yes|
 |...              |... and many more!|
 
 To see the list of **all** of the commands execute the help command in `LLDB` or go to the [Wiki](https://github.com/facebook/chisel/wiki).
